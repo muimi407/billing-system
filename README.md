@@ -1,111 +1,59 @@
-# billing-system
+PHPNuxBill - Billing System
+Overview
+PHPNuxBill is a billing system designed for managing user accounts, services, and invoices. This guide provides step-by-step instructions to set up and run PHPNuxBill using Docker.
+Prerequisites
+Ensure you have the following installed on your system:
+•	Docker & Docker Compose
+•	WSL (Windows Subsystem for Linux) (if using Windows)
+Installation and Setup
+1. Clone the Repository
+cd /mnt/c/Users/Administrator/Desktop/web/
+git clone <your-repo-url> billing-system
+cd billing-system
+2. Install Docker (If Not Installed)
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+3. Start the Docker Containers
+sudo docker-compose up -d --build
+This will start two containers:
+•	nuxbill (PHP application)
+•	mysql (Database)
+4. Check Running Containers
+sudo docker ps
+Ensure both nuxbill and mysql containers are running.
+5. Configure the Database
+Access the MySQL container and create the required database and user:
+sudo docker exec -it mysql mysql -u root -p
+Then run the following SQL commands:
+CREATE DATABASE IF NOT EXISTS nuxbill;
+CREATE USER IF NOT EXISTS 'nuxbill'@'%' IDENTIFIED BY '12345678';
+GRANT ALL PRIVILEGES ON nuxbill.* TO 'nuxbill'@'%';
+FLUSH PRIVILEGES;
+EXIT;
+6. Install PHPNuxBill
+Open your browser and go to:
+http://localhost
+Follow the on-screen instructions and enter the database credentials:
+•	Database Host: mysql
+•	Database Username: nuxbill
+•	Database Password: 12345678
+•	Database Name: nuxbill
 
-[![ReadMeSupportPalestine](https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-project.svg)](https://s.id/standwithpalestine)
+7. Post-Installation Steps
+•	Rename pages_example to pages (if it exists)
+mv pages_example pages
+•	Delete the installation directory for security:
+rm -rf system/install
+•	Access the Admin Panel:
+o	URL: http://localhost/admin
+o	Username: admin
+o	Password: admin
+Troubleshooting
+•	If you encounter database connection issues, restart the containers:
+sudo docker-compose down && sudo docker-compose up -d
+•	To check logs for debugging:
+sudo docker logs nuxbill
+sudo docker logs mysql
+License
+This project is licensed under the MIT License.
 
-# PHPNuxBill - PHP Mikrotik Billing
-
-![PHPNuxBill](install/img/logo.png)
-
-## Feature
-
-- Voucher Generator and Print
-- [Freeradius](https://github.com/hotspotbilling/phpnuxbill/wiki/FreeRadius)
-- Self registration
-- User Balance
-- Auto Renewal Package using Balance
-- Multi Router Mikrotik
-- Hotspot & PPPOE
-- Easy Installation
-- Multi Language
-- Payment Gateway
-- SMS validation for login
-- Whatsapp Notification to Consumer
-- Telegram Notification for Admin
-
-See [How it Works / Cara Kerja](https://github.com/hotspotbilling/phpnuxbill/wiki/How-It-Works---Cara-kerja)
-
-## Payment Gateway And Plugin
-
-- [Payment Gateway List](https://github.com/orgs/hotspotbilling/repositories?q=payment+gateway)
-- [Plugin List](https://github.com/orgs/hotspotbilling/repositories?q=plugin)
-
-You can download payment gateway and Plugin from Plugin Manager
-
-## System Requirements
-
-Most current web servers with PHP & MySQL installed will be capable of running PHPNuxBill
-
-Minimum Requirements
-
-- Linux or Windows OS
-- Minimum PHP Version 7.4
-- Both PDO & MySQLi Support
-- PHP-GD2 Image Library
-- PHP-CURL
-- PHP-ZIP
-- PHP-Mbstring
-- MySQL Version 4.1.x and above
-
-can be Installed in Raspberry Pi Device.
-
-The problem with windows is hard to set cronjob, better Linux
-
-## Changelog
-
-[CHANGELOG.md](CHANGELOG.md)
-
-## Installation
-
-[Installation instructions](https://github.com/hotspotbilling/phpnuxbill/wiki)
-
-## Freeradius
-
-Support [Freeradius with Database](https://github.com/hotspotbilling/phpnuxbill/wiki/FreeRadius)
-
-## Community Support
-
-- [Github Discussion](https://github.com/hotspotbilling/phpnuxbill/discussions)
-- [Telegram Group](https://t.me/phpmixbill)
-
-## Technical Support
-
-This Software is Free and Open Source, Without any Warranty.
-
-Even if the software is free, but Technical Support is not,  
-Technical Support Start from Rp 500.000 or $50
-
-If you chat me for any technical support,  
-you need to pay,  
-ask anything for free in the [discussion](/hotspotbilling/phpnuxbill/discussions) page or [Telegram Group](https://t.me/phpnuxbill)
-
-Contact me at [Telegram](https://t.me/ibnux)
-
-## License
-
-GNU General Public License version 2 or later
-
-see [LICENSE](LICENSE) file
-
-
-## Donate to ibnux
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/ibnux)
-
-BCA: 5410454825
-
-Mandiri: 163-000-1855-793
-
-a.n Ibnu Maksum
-
-## SPONSORS
-
-- [mixradius.com](https://mixradius.com/) Paid Services Billing Radius
-- [mlink.id](https://mlink.id)
-- [https://github.com/sonyinside](https://github.com/sonyinside)
-
-## Thanks
-We appreciate all people who are participating in this project.
-
-<a href="https://github.com/hotspotbilling/phpnuxbill/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=hotspotbilling/phpnuxbill" />
-</a>
